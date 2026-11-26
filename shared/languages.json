@@ -1,0 +1,67 @@
+{
+  "en": {
+    "min_word_length": 3,
+    "max_word_length": 15,
+    "threshold": 0.4701456732302906,
+    "rtl": false,
+    "font": "Noto Sans",
+    "exclude_capitalized_candidates": true,
+    "cosine_blend_weights": {
+      "numberbatch": 0.25,
+      "bge_m3": 0.75
+    },
+    "threshold_percentile": 98.25
+  },
+  "de": {
+    "min_word_length": 3,
+    "max_word_length": 22,
+    "threshold": 0.5048540052771568,
+    "rtl": false,
+    "font": "Noto Sans",
+    "exclude_capitalized_candidates": false,
+    "cosine_blend_weights": {
+      "numberbatch": 0.25,
+      "bge_m3": 0.75
+    },
+    "threshold_percentile": 98.25
+  },
+  "es": {
+    "min_word_length": 3,
+    "max_word_length": 16,
+    "threshold": 0.458718126192689,
+    "rtl": false,
+    "font": "Noto Sans",
+    "exclude_capitalized_candidates": true,
+    "cosine_blend_weights": {
+      "numberbatch": 0.25,
+      "bge_m3": 0.75
+    },
+    "threshold_percentile": 98.25
+  },
+  "ar": {
+    "min_word_length": 2,
+    "max_word_length": 15,
+    "threshold": 0.5665603105723858,
+    "rtl": true,
+    "font": "Noto Sans Arabic",
+    "exclude_capitalized_candidates": false,
+    "cosine_blend_weights": {
+      "numberbatch": 0.25,
+      "bge_m3": 0.75
+    },
+    "threshold_percentile": 98.25
+  },
+  "ja": {
+    "min_word_length": 1,
+    "max_word_length": 10,
+    "threshold": 0.4502099346369506,
+    "rtl": false,
+    "font": "Noto Sans JP",
+    "exclude_capitalized_candidates": false,
+    "cosine_blend_weights": {
+      "numberbatch": 0.25,
+      "bge_m3": 0.75
+    },
+    "threshold_percentile": 98.25
+  }
+}

@@ -1,0 +1,56 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    image: linkwords-backend:local
+    environment:
+      LINKWORDS_DATA_ROOT: /workspace/data
+      LINKWORDS_ANALYTICS_DB: /workspace/data/analytics.sqlite
+      LINKWORDS_CORS_ORIGINS: ${LINKWORDS_CORS_ORIGINS:-http://localhost:3000}
+      LINKWORDS_ADMIN_TOKEN: ${LINKWORDS_ADMIN_TOKEN:?Set LINKWORDS_ADMIN_TOKEN in .env}
+      LINKWORDS_SLOW_GUESS_THRESHOLD: ${LINKWORDS_SLOW_GUESS_THRESHOLD:-35}
+    volumes:
+      - ${LINKWORDS_HOST_DATA_DIR:-./data}:/workspace/data
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/openapi.json', timeout=2)"
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000}
+    image: linkwords-frontend:local
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  rollover:
+    image: linkwords-backend:local
+    command: ["python", "-m", "app.rollover"]
+    environment:
+      LINKWORDS_DATA_ROOT: /workspace/data
+      LINKWORDS_ANALYTICS_DB: /workspace/data/analytics.sqlite
+      LINKWORDS_ALERT_WEBHOOK_URL: ${LINKWORDS_ALERT_WEBHOOK_URL:-}
+      LOG_LEVEL: INFO
+    volumes:
+      - ${LINKWORDS_HOST_DATA_DIR:-./data}:/workspace/data
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped

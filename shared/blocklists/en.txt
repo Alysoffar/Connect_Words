@@ -1,0 +1,19 @@
+# LinkWords English stopwords and profanity blocks.
+a
+an
+and
+are
+as
+at
+be
+by
+damn
+fuck
+in
+is
+of
+on
+or
+shit
+the
+to

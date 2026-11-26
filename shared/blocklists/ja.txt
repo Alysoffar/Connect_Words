@@ -1,0 +1,9 @@
+# LinkWords Japanese stopwords and profanity blocks.
+が
+で
+と
+に
+の
+は
+を
+くそ

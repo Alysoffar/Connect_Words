@@ -1,0 +1,8 @@
+# LinkWords Arabic stopwords and profanity blocks.
+إلى
+على
+في
+من
+تباً
+و
+يا

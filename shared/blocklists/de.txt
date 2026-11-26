@@ -1,0 +1,18 @@
+# LinkWords German stopwords and profanity blocks.
+aber
+als
+am
+an
+auf
+das
+der
+die
+ein
+für
+in
+ist
+mit
+scheiße
+und
+von
+zu
