@@ -1,0 +1,14 @@
+matplotlib==3.9.3
+numpy==1.26.4
+nltk==3.9.1
+huggingface-hub==0.26.2
+torch==2.5.1
+transformers==4.46.3
+tokenizers==0.20.3
+safetensors==0.4.5
+sentence-transformers==3.3.1
+tqdm==4.67.1
+wordfreq==3.1.1
+mecab-python3==1.0.10
+ipadic==1.0.0
+pytest==8.3.4

@@ -1,0 +1,17 @@
+# LinkWords Spanish stopwords and profanity blocks.
+a
+de
+el
+en
+es
+la
+las
+los
+mierda
+o
+para
+por
+que
+un
+una
+y

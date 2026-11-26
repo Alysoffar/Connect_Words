@@ -214,10 +214,35 @@ tempCodeRunnerFile.py
 # PyPI configuration file
 .pypirc
 
+# Generated LinkWords data artifacts
+/data/vectors/*
+!/data/vectors/.gitkeep
+/data/vocab/*
+!/data/vocab/.gitkeep
+/data/puzzles/*
+!/data/puzzles/.gitkeep
+/data/sources/
+/data/models/
+/data/cache/
+/data/nltk_data/
+/data/calibration/
+/data/filters/*
+!/data/filters/proper_nouns/
+!/data/filters/proper_nouns/*.txt
+/data/*.sqlite
+/data/*.sqlite-*
+
 # Marimo
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Node.js / Next.js
+node_modules/
+.next/
+out/
+playwright-report/
+test-results/
 
 # Streamlit
 .streamlit/secrets.toml

@@ -1,0 +1,1253 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "LinkWords API",
+    "description": "Multilingual word-association gameplay API. Vocabulary, vectors, lexical scores, and puzzle records load at startup; anonymous session analytics and accepted guesses persist in SQLite.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/puzzle/daily": {
+      "get": {
+        "summary": "Daily Puzzle",
+        "operationId": "daily_puzzle_api_puzzle_daily_get",
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Lang"
+            }
+          },
+          {
+            "name": "sessionId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Sessionid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PuzzleResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          }
+        }
+      }
+    },
+    "/api/puzzle/practice": {
+      "get": {
+        "summary": "Practice Puzzle",
+        "operationId": "practice_puzzle_api_puzzle_practice_get",
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Lang"
+            }
+          },
+          {
+            "name": "sessionId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Sessionid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PuzzleResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          }
+        }
+      }
+    },
+    "/api/guess": {
+      "post": {
+        "summary": "Submit Guess",
+        "operationId": "submit_guess_api_guess_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuessRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuessResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clue": {
+      "post": {
+        "summary": "Request Clue",
+        "operationId": "request_clue_api_clue_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClueRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClueResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/stats": {
+      "get": {
+        "summary": "Game Stats",
+        "operationId": "game_stats_api_stats_get",
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Lang"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatsResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          }
+        }
+      }
+    },
+    "/api/admin/playtest/puzzles": {
+      "get": {
+        "summary": "Admin Playtest Puzzles",
+        "operationId": "admin_playtest_puzzles_api_admin_playtest_puzzles_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Lang"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlaytestPuzzlesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/api/admin/playtest/feedback": {
+      "post": {
+        "summary": "Submit Playtest Feedback",
+        "operationId": "submit_playtest_feedback_api_admin_playtest_feedback_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlaytestFeedbackRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlaytestFeedbackResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/admin/playtest/rejected-words.csv": {
+      "get": {
+        "summary": "Export Rejected Words",
+        "operationId": "export_rejected_words_api_admin_playtest_rejected_words_csv_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Lang"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/playtest/slow-puzzles.csv": {
+      "get": {
+        "summary": "Export Slow Puzzles",
+        "operationId": "export_slow_puzzles_api_admin_playtest_slow_puzzles_csv_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Lang"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "APIErrorDetail": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "details": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Details"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "APIErrorDetail",
+        "description": "Stable error code, message, and optional request context."
+      },
+      "APIErrorResponse": {
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/APIErrorDetail"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "title": "APIErrorResponse",
+        "description": "Envelope used by expected API failures."
+      },
+      "ClueRequest": {
+        "properties": {
+          "puzzleId": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Puzzleid"
+          },
+          "sessionId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Sessionid"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "daily",
+              "practice"
+            ],
+            "title": "Mode"
+          },
+          "lang": {
+            "type": "string",
+            "title": "Lang"
+          },
+          "currentBoardWords": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Currentboardwords"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "puzzleId",
+          "sessionId",
+          "mode",
+          "lang",
+          "currentBoardWords"
+        ],
+        "title": "ClueRequest",
+        "description": "Clue request for a puzzle and current board."
+      },
+      "ClueResponse": {
+        "properties": {
+          "puzzleId": {
+            "type": "string",
+            "title": "Puzzleid"
+          },
+          "word": {
+            "type": "string",
+            "title": "Word"
+          },
+          "fromWord": {
+            "type": "string",
+            "title": "Fromword"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "puzzleId",
+          "word",
+          "fromWord"
+        ],
+        "title": "ClueResponse",
+        "description": "One unused word from a known valid path."
+      },
+      "EdgeResponse": {
+        "properties": {
+          "wordA": {
+            "type": "string",
+            "title": "Worda"
+          },
+          "wordB": {
+            "type": "string",
+            "title": "Wordb"
+          },
+          "weight": {
+            "type": "number",
+            "title": "Weight"
+          },
+          "nearMiss": {
+            "type": "boolean",
+            "title": "Nearmiss"
+          },
+          "retained": {
+            "type": "boolean",
+            "title": "Retained"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "wordA",
+          "wordB",
+          "weight",
+          "nearMiss",
+          "retained"
+        ],
+        "title": "EdgeResponse",
+        "description": "Scored edge returned for the submitted word."
+      },
+      "FastestSolve": {
+        "properties": {
+          "place": {
+            "type": "integer",
+            "title": "Place"
+          },
+          "lang": {
+            "type": "string",
+            "title": "Lang"
+          },
+          "pathLength": {
+            "type": "integer",
+            "title": "Pathlength"
+          },
+          "guessCount": {
+            "type": "integer",
+            "title": "Guesscount"
+          },
+          "durationMs": {
+            "type": "integer",
+            "title": "Durationms"
+          },
+          "solvedAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Solvedat"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "place",
+          "lang",
+          "pathLength",
+          "guessCount",
+          "durationMs",
+          "solvedAt"
+        ],
+        "title": "FastestSolve",
+        "description": "Privacy-safe leaderboard row with no session identifier."
+      },
+      "GuessRequest": {
+        "properties": {
+          "puzzleId": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Puzzleid"
+          },
+          "sessionId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Sessionid"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "daily",
+              "practice"
+            ],
+            "title": "Mode"
+          },
+          "lang": {
+            "type": "string",
+            "title": "Lang"
+          },
+          "word": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Word"
+          },
+          "currentBoardWords": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Currentboardwords"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "puzzleId",
+          "sessionId",
+          "mode",
+          "lang",
+          "word",
+          "currentBoardWords"
+        ],
+        "title": "GuessRequest",
+        "description": "One word submission with the client's current board."
+      },
+      "GuessResponse": {
+        "properties": {
+          "puzzleId": {
+            "type": "string",
+            "title": "Puzzleid"
+          },
+          "lang": {
+            "type": "string",
+            "title": "Lang"
+          },
+          "word": {
+            "type": "string",
+            "title": "Word"
+          },
+          "normalized": {
+            "type": "string",
+            "title": "Normalized"
+          },
+          "edges": {
+            "items": {
+              "$ref": "#/components/schemas/EdgeResponse"
+            },
+            "type": "array",
+            "title": "Edges"
+          },
+          "prunedEdges": {
+            "items": {
+              "$ref": "#/components/schemas/EdgeResponse"
+            },
+            "type": "array",
+            "title": "Prunededges"
+          },
+          "connected": {
+            "type": "boolean",
+            "title": "Connected"
+          },
+          "path": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Path"
+          },
+          "score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Score"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "puzzleId",
+          "lang",
+          "word",
+          "normalized",
+          "edges",
+          "prunedEdges",
+          "connected",
+          "path",
+          "score"
+        ],
+        "title": "GuessResponse",
+        "description": "Validation, edge, win, and scoring results."
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "PlaytestFeedbackItem": {
+        "properties": {
+          "puzzleId": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Puzzleid"
+          },
+          "rating": {
+            "type": "integer",
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Rating"
+          },
+          "feedback": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "Feedback",
+            "default": ""
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "puzzleId",
+          "rating"
+        ],
+        "title": "PlaytestFeedbackItem",
+        "description": "One rating and optional note for a reviewed puzzle."
+      },
+      "PlaytestFeedbackRequest": {
+        "properties": {
+          "lang": {
+            "type": "string",
+            "title": "Lang"
+          },
+          "isNativeSpeaker": {
+            "type": "boolean",
+            "title": "Isnativespeaker"
+          },
+          "responses": {
+            "items": {
+              "$ref": "#/components/schemas/PlaytestFeedbackItem"
+            },
+            "type": "array",
+            "maxItems": 10,
+            "minItems": 10,
+            "title": "Responses"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "lang",
+          "isNativeSpeaker",
+          "responses"
+        ],
+        "title": "PlaytestFeedbackRequest",
+        "description": "Native-speaker feedback for exactly ten puzzles in one language."
+      },
+      "PlaytestFeedbackResponse": {
+        "properties": {
+          "lang": {
+            "type": "string",
+            "title": "Lang"
+          },
+          "submitted": {
+            "type": "integer",
+            "title": "Submitted"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "lang",
+          "submitted"
+        ],
+        "title": "PlaytestFeedbackResponse",
+        "description": "Feedback batch insertion result."
+      },
+      "PlaytestPuzzle": {
+        "properties": {
+          "puzzleId": {
+            "type": "string",
+            "title": "Puzzleid"
+          },
+          "lang": {
+            "type": "string",
+            "title": "Lang"
+          },
+          "anchorA": {
+            "type": "string",
+            "title": "Anchora"
+          },
+          "anchorB": {
+            "type": "string",
+            "title": "Anchorb"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "puzzleId",
+          "lang",
+          "anchorA",
+          "anchorB"
+        ],
+        "title": "PlaytestPuzzle",
+        "description": "Minimal puzzle details rendered by the internal feedback form."
+      },
+      "PlaytestPuzzlesResponse": {
+        "properties": {
+          "lang": {
+            "type": "string",
+            "title": "Lang"
+          },
+          "puzzles": {
+            "items": {
+              "$ref": "#/components/schemas/PlaytestPuzzle"
+            },
+            "type": "array",
+            "maxItems": 10,
+            "minItems": 10,
+            "title": "Puzzles"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "lang",
+          "puzzles"
+        ],
+        "title": "PlaytestPuzzlesResponse",
+        "description": "Ten selected puzzles for one native-speaker language review."
+      },
+      "PuzzleResponse": {
+        "properties": {
+          "puzzleId": {
+            "type": "string",
+            "title": "Puzzleid"
+          },
+          "lang": {
+            "type": "string",
+            "title": "Lang"
+          },
+          "anchorA": {
+            "type": "string",
+            "title": "Anchora"
+          },
+          "anchorB": {
+            "type": "string",
+            "title": "Anchorb"
+          },
+          "threshold": {
+            "type": "number",
+            "title": "Threshold"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "puzzleId",
+          "lang",
+          "anchorA",
+          "anchorB",
+          "threshold"
+        ],
+        "title": "PuzzleResponse",
+        "description": "Anchor-only public puzzle details."
+      },
+      "StatsAggregate": {
+        "properties": {
+          "lang": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lang"
+          },
+          "startedGames": {
+            "type": "integer",
+            "title": "Startedgames"
+          },
+          "solves": {
+            "type": "integer",
+            "title": "Solves"
+          },
+          "solveRate": {
+            "type": "number",
+            "title": "Solverate"
+          },
+          "averagePathLength": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Averagepathlength"
+          },
+          "averageGuesses": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Averageguesses"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "lang",
+          "startedGames",
+          "solves",
+          "solveRate",
+          "averagePathLength",
+          "averageGuesses"
+        ],
+        "title": "StatsAggregate",
+        "description": "Solve metrics across all games or one configured language."
+      },
+      "StatsResponse": {
+        "properties": {
+          "global": {
+            "$ref": "#/components/schemas/StatsAggregate"
+          },
+          "languages": {
+            "items": {
+              "$ref": "#/components/schemas/StatsAggregate"
+            },
+            "type": "array",
+            "title": "Languages"
+          },
+          "todayFastestSolves": {
+            "items": {
+              "$ref": "#/components/schemas/FastestSolve"
+            },
+            "type": "array",
+            "title": "Todayfastestsolves"
+          },
+          "slowGuessThreshold": {
+            "type": "number",
+            "title": "Slowguessthreshold"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "global",
+          "languages",
+          "todayFastestSolves",
+          "slowGuessThreshold"
+        ],
+        "title": "StatsResponse",
+        "description": "Global, per-language, and current-day solve statistics."
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    },
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
